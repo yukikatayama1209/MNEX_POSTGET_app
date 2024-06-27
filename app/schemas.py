@@ -17,3 +17,21 @@ class Price(PriceBase):
 
     class Config:
         orm_mode = True
+
+class HobbyBase(BaseModel):
+    username: str
+    product: str
+    purchase_date: date
+    shop_location: str
+    hobby_photo: str
+    comments: str | None = None
+    good: int = 0
+
+class HobbyCreate(HobbyBase):
+    pass
+
+class Hobby(HobbyBase):
+    id: int
+
+    class Config:
+        orm_mode = True

@@ -11,3 +11,9 @@ def create_price(db: Session, price: schemas.PriceCreate):
     db.refresh(db_price)
     return db_price
 
+def create_hobby(db: Session, hobby: schemas.HobbyCreate):
+    db_hobby = models.Hobby(**hobby.dict())
+    db.add(db_hobby)
+    db.commit()
+    db.refresh(db_hobby)
+    return db_hobby

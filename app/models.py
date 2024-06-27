@@ -5,10 +5,21 @@ Base = declarative_base()
 
 class Price(Base):
     __tablename__ = 'prices'
-    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    id = Column(Integer, primary_key=True, index=True)
     username = Column(String(255), nullable=False)
     product = Column(String(255), nullable=False)
     purchase_date = Column(Date, nullable=False)
     shop_location = Column(String(255), nullable=False)
     product_photo = Column(Text, nullable=False)
     comments = Column(Text)
+
+class Hobby(Base):
+    __tablename__ = 'hobbys'
+    id = Column(Integer, primary_key=True, index=True)
+    username = Column(String(255), nullable=False)
+    product = Column(String(255), nullable=False)
+    purchase_date = Column(Date, nullable=False)
+    shop_location = Column(String(255), nullable=False)
+    hobby_photo = Column(Text, nullable=False)
+    comments = Column(Text)
+    good = Column(Integer, default=0)

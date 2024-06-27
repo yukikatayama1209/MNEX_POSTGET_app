@@ -34,6 +34,10 @@ def get_db():
 def create_price(price: schemas.PriceCreate, db: Session = Depends(get_db)):
     return crud.create_price(db=db, price=price)
 
+@app.post("/hobbys/", response_model=schemas.Hobby)
+def create_hobby(hobby: schemas.HobbyCreate, db: Session = Depends(get_db)):
+    return crud.create_hobby(db=db, hobby=hobby)
+
 @app.get("/prices/", response_model=list[schemas.Price])
 def read_prices(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     prices = crud.get_prices(db, skip=skip, limit=limit)
