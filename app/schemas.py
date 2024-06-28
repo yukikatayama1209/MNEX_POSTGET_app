@@ -1,6 +1,15 @@
 from pydantic import BaseModel
 from datetime import date
 
+class UserBase(BaseModel):
+    username: str
+    password: str
+    point: int
+
+class User(UserBase):
+    id: int
+class UserCreate(UserBase):
+    pass
 class PriceBase(BaseModel):
     username: str
     product: str

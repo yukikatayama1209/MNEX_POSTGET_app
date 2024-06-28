@@ -3,6 +3,14 @@ from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 
+class User(Base):
+    __tablename__ = 'users'
+    id = Column(Integer, primary_key=True, index=True)
+    username = Column(String(255), nullable=False)
+    password = Column(String(255), nullable=False)
+    point = Column(Integer, default=0)
+
+
 class Price(Base):
     __tablename__ = 'prices'
     id = Column(Integer, primary_key=True, index=True)

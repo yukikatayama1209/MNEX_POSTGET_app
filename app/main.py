@@ -93,3 +93,17 @@ async def create_hobby(
 @app.get("/photos/{file_path:path}")
 async def get_photo(file_path: str):
     return FileResponse(file_path)
+
+@app.get("/hobbys/latest", response_model=schemas.Hobby)
+def get_latest_hobby(db: Session = Depends(get_db)):
+    hobby = crud.get_latest_hobby(db)
+    if hobby is None:
+        raise HTTPException(status_code=404, detail="Hobby not found")
+    return hobby
+
+@app.post("/hobbys/{hobby_id}/like", response_model=schemas.Hobby)
+def like_hobby(hobby_id: int, db: Session = Depends(get_db)):
+    hobby = crud.increment_good(db, hobby_id)
+    if hobby is None:
+        raise HTTPException(status_code=404, detail="Hobby not found")
+    return hobby
