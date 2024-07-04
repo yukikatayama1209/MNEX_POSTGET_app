@@ -4,7 +4,6 @@ import axios from 'axios';
 
 function PostStepOne() {
   const [formData, setFormData] = useState({
-    username: '',
     product: '',
     purchase_date: '',
     shop_location: '',
@@ -23,8 +22,8 @@ function PostStepOne() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const token = localStorage.getItem('token');
     const data = new FormData();
-    data.append('username', formData.username);
     data.append('product', formData.product);
     data.append('purchase_date', formData.purchase_date);
     data.append('shop_location', formData.shop_location);
@@ -34,7 +33,8 @@ function PostStepOne() {
     }
     const response = await axios.post('http://localhost:8000/prices/', data, {
       headers: {
-        'Content-Type': 'multipart/form-data'
+        'Content-Type': 'multipart/form-data',
+        'Authorization': `Bearer ${token}`
       }
     });
     navigate('/post-step-two', { state: { ...response.data } });
@@ -42,7 +42,6 @@ function PostStepOne() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <input type="text" name="username" placeholder="Username" value={formData.username} onChange={handleChange} />
       <input type="text" name="product" placeholder="Product" value={formData.product} onChange={handleChange} />
       <input type="date" name="purchase_date" value={formData.purchase_date} onChange={handleChange} />
       <input type="text" name="shop_location" placeholder="Shop Location" value={formData.shop_location} onChange={handleChange} />

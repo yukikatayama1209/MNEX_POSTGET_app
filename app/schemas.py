@@ -1,6 +1,10 @@
 from pydantic import BaseModel
 from datetime import date
 
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
 class UserBase(BaseModel):
     username: str
     password: str
@@ -8,8 +12,9 @@ class UserBase(BaseModel):
 
 class User(UserBase):
     id: int
-class UserCreate(UserBase):
-    pass
+class UserCreate(BaseModel):
+    username: str
+    password: str
 class PriceBase(BaseModel):
     username: str
     product: str

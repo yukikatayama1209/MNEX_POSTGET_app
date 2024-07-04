@@ -1,9 +1,22 @@
 from sqlalchemy.orm import Session
-from sqlalchemy import desc
 from . import models, schemas
+from passlib.context import CryptContext
 
-def get_prices(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(models.Price).offset(skip).limit(limit).all()
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+def create_user(db: Session, user: schemas.UserCreate):
+    hashed_password = pwd_context.hash(user.password)
+    db_user = models.User(username=user.username, password=hashed_password)
+    db.add(db_user)
+    db.commit()
+    db.refresh(db_user)
+    return db_user
+
+def authenticate_user(db: Session, username: str, password: str):
+    user = db.query(models.User).filter(models.User.username == username).first()
+    if user and pwd_context.verify(password, user.password):
+        return user
+    return None
 
 def create_price(db: Session, price: schemas.PriceCreate):
     db_price = models.Price(**price.dict())
@@ -20,7 +33,7 @@ def create_hobby(db: Session, hobby: schemas.HobbyCreate):
     return db_hobby
 
 def get_latest_hobby(db: Session):
-    return db.query(models.Hobby).order_by(desc(models.Hobby.id)).first()
+    return db.query(models.Hobby).order_by(models.Hobby.id.desc()).first()
 
 def increment_good(db: Session, hobby_id: int):
     hobby = db.query(models.Hobby).filter(models.Hobby.id == hobby_id).first()
@@ -30,5 +43,3 @@ def increment_good(db: Session, hobby_id: int):
         db.refresh(hobby)
         return hobby
     return None
-
-#def signin_as_users()

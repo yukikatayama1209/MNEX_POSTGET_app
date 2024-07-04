@@ -4,9 +4,9 @@ import axios from 'axios';
 
 function PostStepTwo() {
   const [formData, setFormData] = useState({
-    hobby_photo: '',
     comments: ''
   });
+  const [hobbyPhoto, setHobbyPhoto] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
   const initialData = location.state;
@@ -16,26 +16,26 @@ function PostStepTwo() {
   };
 
   const handleFileChange = (e) => {
-    setFormData({ ...formData, hobby_photo: e.target.files[0] });
+    setHobbyPhoto(e.target.files[0]);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const token = localStorage.getItem('token');
     const data = new FormData();
-    data.append('username', initialData.username);
     data.append('product', initialData.product);
     data.append('purchase_date', initialData.purchase_date);
     data.append('shop_location', initialData.shop_location);
     data.append('comments', formData.comments);
-    if (formData.hobby_photo) {
-      data.append('hobby_photo', formData.hobby_photo);
+    if (hobbyPhoto) {
+      data.append('hobby_photo', hobbyPhoto);
     }
-    const response = await axios.post('http://localhost:8000/hobbys/', data, {
+    await axios.post('http://localhost:8000/hobbys/', data, {
       headers: {
-        'Content-Type': 'multipart/form-data'
+        'Content-Type': 'multipart/form-data',
+        'Authorization': `Bearer ${token}`
       }
     });
-    console.log(response.data); // 追加: レスポンスをコンソールに出力
     navigate('/');
   };
 
