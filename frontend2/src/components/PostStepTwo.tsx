@@ -33,7 +33,7 @@ const PostStepTwo: React.FC = () => {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         }
       });
-      navigate('/home');
+      navigate('/');
     } catch (error) {
       console.error(error);
       alert('Submission failed');

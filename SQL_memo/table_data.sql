@@ -11,8 +11,8 @@ CREATE TABLE prices(
     purchase_date Date NOT NULL,
     shop_location TEXT NOT NULL,
     product_photo TEXT NOT NULL,
-    comments TEXT NOT NULL,
-)
+    comments TEXT NOT NULL
+);
 
 CREATE TABLE hobbys(
     id SERIAL PRIMARY KEY,
@@ -20,4 +20,4 @@ CREATE TABLE hobbys(
     price_id INT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (price_id) REFERENCES prices(id)
-)
+);
