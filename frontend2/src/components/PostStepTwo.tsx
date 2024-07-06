@@ -1,55 +1,58 @@
 import React, { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 
 const PostStepTwo: React.FC = () => {
-  const [formData, setFormData] = useState<{
-    hobby_photo: File | null;
-    comments: string;
-  }>({
-    hobby_photo: null,
+  const [formData, setFormData] = useState({
     comments: ''
   });
+  const [hobbyPhoto, setHobbyPhoto] = useState<File | null>(null);
   const navigate = useNavigate();
+  const location = useLocation();
+  const { price_id } = location.state;
 
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, hobby_photo: e.target.files ? e.target.files[0] : null });
+    setHobbyPhoto(e.target.files ? e.target.files[0] : null);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formDataToSubmit = new FormData();
-    if (formData.hobby_photo) {
-      formDataToSubmit.append('hobby_photo', formData.hobby_photo);
+    const token = localStorage.getItem('token');
+    const data = new FormData();
+    data.append('price_id', price_id);
+    data.append('comments', formData.comments);
+    if (hobbyPhoto) {
+      data.append('hobby_photo', hobbyPhoto);
     }
-    formDataToSubmit.append('comments', formData.comments);
     try {
-      await axios.post('http://localhost:8000/hobbys/', formDataToSubmit, {
+      await axios.post('http://localhost:8000/hobbys/', data, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
+          'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${token}`
         }
       });
-      navigate('/');
+      navigate('/home'); // POSTが完了したらホームに戻る
     } catch (error) {
-      console.error(error);
-      alert('Submission failed');
+      console.error('Error submitting form', error);
     }
+  };
+
+  const handleSkip = () => {
+    navigate('/home'); // スキップボタンをクリックしたらホームに戻る
   };
 
   return (
-    <div>
-      <h2>Post Step Two</h2>
-      <form onSubmit={handleSubmit}>
-        <input type="file" name="hobby_photo" onChange={handleFileChange} />
-        <textarea name="comments" placeholder="Comments" value={formData.comments} onChange={handleChange}></textarea>
-        <button type="submit">Submit</button>
-      </form>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <input type="file" name="hobby_photo" onChange={handleFileChange} />
+      <textarea name="comments" placeholder="Comments" value={formData.comments} onChange={handleChange} />
+      <button type="submit">Submit</button>
+      <button type="button" onClick={handleSkip}>Skip</button>
+    </form>
   );
-}
+};
 
 export default PostStepTwo;

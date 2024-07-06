@@ -1,51 +1,63 @@
 from pydantic import BaseModel
+from typing import Optional
 from datetime import date
 
+class PriceBase(BaseModel):
+    product: str
+    purchase_date: str
+    shop_location: str
+    comments: str
+    product_photo: Optional[str] = None
+
+class PriceCreate(PriceBase):
+    username: str
+
+class Price(PriceBase):
+    id: int
+    username: str
+
+    class Config:
+        from_attributes = True
+
+class HobbyBase(BaseModel):
+    product: str
+    purchase_date: str
+    shop_location: str
+    comments: str
+
+class HobbyCreate(HobbyBase):
+    username: str
+    hobby_photo: Optional[str] = None
+    good: int
+
+class Hobby(HobbyBase):
+    id: int
+    
+
+    class Config:
+        from_attributes = True
+
+class UserBase(BaseModel):
+    username: str
+
+class UserCreate(UserBase):
+    password: str
+
+class User(UserBase):
+    id: int
+    point: int
+
+    class Config:
+        from_attributes = True
 
 class Token(BaseModel):
     access_token: str
     token_type: str
-class UserBase(BaseModel):
+
+class TokenData(BaseModel):
     username: str
     password: str
+
+class PointUpdate(BaseModel):
     point: int
-
-class User(UserBase):
-    id: int
-class UserCreate(BaseModel):
     username: str
-    password: str
-class PriceBase(BaseModel):
-    username: str
-    product: str
-    purchase_date: date
-    shop_location: str
-    product_photo: str
-    comments: str | None = None
-
-class PriceCreate(PriceBase):
-    pass
-
-class Price(PriceBase):
-    id: int
-
-    class Config:
-        orm_mode = True
-
-class HobbyBase(BaseModel):
-    username: str
-    product: str
-    purchase_date: date
-    shop_location: str
-    hobby_photo: str
-    comments: str | None = None
-    good: int = 0
-
-class HobbyCreate(HobbyBase):
-    pass
-
-class Hobby(HobbyBase):
-    id: int
-
-    class Config:
-        orm_mode = True
