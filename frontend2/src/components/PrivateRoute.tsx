@@ -1,14 +1,15 @@
 import React from 'react';
-import { Navigate } from 'react-router-dom';
+import { Route, Navigate } from 'react-router-dom';
+import { useAuth } from './AuthContext';
 
 interface PrivateRouteProps {
-  component: React.ComponentType;
+  component: React.ComponentType<any>;
 }
 
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ component: Component }) => {
-  const token = localStorage.getItem('token');
+  const { isAuthenticated } = useAuth();
 
-  return token ? <Component /> : <Navigate to="/login" />;
+  return isAuthenticated ? <Component /> : <Navigate to="/login" replace />;
 };
 
 export default PrivateRoute;
