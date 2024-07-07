@@ -1,4 +1,4 @@
-#!/home/akkunn/MNEX_POSTGET_app/venv/bin/python3
+#!/home/yuki/akkunn/MNEX_POSTGET_app/venv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys

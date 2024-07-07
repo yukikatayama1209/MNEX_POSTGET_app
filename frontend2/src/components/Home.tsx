@@ -4,6 +4,8 @@ import axios from 'axios';
 import NewPostButton from './NewPostButton';
 import '../assets/styles/Home.css';
 
+
+
 interface User {
   username: string;
   point: number;
