@@ -1,45 +1,62 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+// AuthContext.tsx
+import React, { createContext, useState, useEffect, ReactNode } from 'react';
+import Cookies from 'js-cookie';
+import axios from 'axios';
 
 interface AuthContextType {
   isAuthenticated: boolean;
-  login: () => void;
+  isLoading: boolean;
+  login: (token: string) => void;
   logout: () => void;
 }
 
-interface AuthProviderProps {
-  children: ReactNode;
-}
+export const AuthContext = createContext<AuthContextType>({
+  isAuthenticated: false,
+  isLoading: true,
+  login: () => {},
+  logout: () => {},
+});
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
-
-export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    setIsAuthenticated(!!token);
+    const verifyToken = async () => {
+      const token = Cookies.get('token');
+      if (token) {
+        try {
+          await axios.get('http://localhost:8000/users/me', {
+            headers: { Authorization: `Bearer ${token}` }
+          });
+          setIsAuthenticated(true);
+          axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        } catch (error) {
+          console.error('Token verification failed:', error);
+          Cookies.remove('token');
+        }
+      }
+      setIsLoading(false);
+    };
+
+    verifyToken();
   }, []);
 
-  const login = () => {
+  const login = (token: string) => {
+    Cookies.set('token', token, { expires: 30 / 1440 }); // 30分の有効期限
     setIsAuthenticated(true);
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
   };
 
   const logout = () => {
+    Cookies.remove('token');
     setIsAuthenticated(false);
-    localStorage.removeItem('token');
+    delete axios.defaults.headers.common['Authorization'];
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, isLoading, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
-};
-
-export const useAuth = (): AuthContextType => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-  return context;
 };

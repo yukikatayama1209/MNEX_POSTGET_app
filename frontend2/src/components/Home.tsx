@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import NewPostButton from './NewPostButton';
+import { AuthContext } from './AuthContext';
 import '../assets/styles/Home.css';
 
 
@@ -14,6 +15,7 @@ interface User {
 const Home: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const navigate = useNavigate();
+  const { logout } = useContext(AuthContext);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -34,7 +36,11 @@ const Home: React.FC = () => {
       };
       fetchUser();
     }
-  }, [navigate]);
+  }, [navigate])
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
 
   return (
     <div className="home-container">
@@ -43,6 +49,7 @@ const Home: React.FC = () => {
         <div className="user-info">
           <p>Username: {user.username}</p>
           <p>Points: {user.point}</p>
+          <button onClick={handleLogout}>Logout</button>
         </div>
       ) : (
         <p>Loading user data...</p>
