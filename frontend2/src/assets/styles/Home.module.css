@@ -1,0 +1,56 @@
+*{
+  margin : 0;
+  box-sizing: border-box; 
+}
+
+.size{
+  width: 100vw;
+}
+
+.homecontainer{ 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+  }
+
+  .h1{
+    /* position: fixed; */
+    top: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+  }
+
+  .frame{
+    display: flex;
+  }
+
+  .iframe{
+    display: grid;
+    width: 50%;
+    height: 600px;
+    justify-content: center;
+    margin: 0 0 10px 10px;
+    justify-content: end;  /* 必要に応じて高さを調整 */
+  }
+
+  .navi{
+    display: flex;
+    background-color: rgb(168, 168, 168);
+  }
+
+  .userdata{
+    margin-top: 5px;
+    color: black;
+    font-size: 20px;
+  }
+
+  .button{
+    justify-content: end;
+    position:absolute;
+    right:10px;
+    margin-top: 10px;
+    /* margin-left: 20vw; */
+  }

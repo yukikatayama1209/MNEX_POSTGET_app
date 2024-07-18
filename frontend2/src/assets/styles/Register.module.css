@@ -1,0 +1,129 @@
+*{
+  margin : 0;
+  box-sizing: border-box; 
+}
+
+.body1 {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  background-color: #fff; /* ダークグレーの背景色 */
+  /* display: flex; */
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  }
+  
+  .register1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+  }
+  
+  .registerform1 {
+    background-color: #fff; /* さらに濃いグレーの背景色 */
+    padding: 40px;
+    border-radius: 20px; /* 柔らかい角丸 */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* 濃い影 */
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+  }
+  
+  h2 {
+    color: #696969; /* 白に近い明るいグレーの文字色 */
+    margin-bottom: 20px;
+  }
+  
+  .formgroup1 {
+    margin-bottom: 20px;
+    text-align: left;
+  }
+  
+  .formgroup1 label {
+    display: block;
+    margin-bottom: 5px;
+    color: #696969; /* 中間のグレーの文字色 */
+  }
+  
+  .formgroup1 input[type="text"],
+  .formgroup1 input[type="password"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    /* border: 1px solid #444; 濃いグレーの境界色 */
+    border-radius: 5px; /* 柔らかい角丸 */
+    font-size: 21px;
+    background-color: #e7e7e7; /* 非アクティブなフィールドの背景色 */
+    color: #111; /* 白に近い文字色 */
+  }
+  
+  .formgroup1 input[type="text"]:focus,
+  .formgroup1 input[type="password"]:focus {
+    border-color: #007acc; /* アクティブなフィールドの境界色 */
+    background-color: #ffffff; /* アクティブなフィールドの背景色 */
+    outline: none;
+    
+  }
+
+  .formgroup1 input[type="text"]:valid,
+  .formgroup1 input[type="password"]:valid {
+    background-color: #fff;
+  }
+  
+  .registerbutton1 {
+    width: 50%;
+    padding: 10px 0;
+    border: none;
+    border-radius: 5px;
+    background-color: #007acc; /* 鮮やかな青のボタン色 */
+    color: #ffffff;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: background-color 0.3s ease; /* スムーズな色変更 */
+  }
+  
+  .registerbutton1:hover {
+    background-color: #005f99; /* ホバー時の色 */
+  }
+
+  
+  .p {
+    margin: 0;
+    color: #696969; /* 中間のグレーの文字色 */
+  }
+  
+  .p a {
+    color: #007acc; /* 鮮やかな青のリンク色 */
+    text-decoration: none;
+  }
+  
+  p a:hover {
+    text-decoration: underline;
+  }
+  
+
+  .field{
+    width: 100%;
+    padding: 10px;
+    border: none; /* 濃いグレーの境界色 */
+    border-radius: 5px; /* 柔らかい角丸 */
+    font-size: 16px;
+    background-color: #e7e7e7; /* 非アクティブなフィールドの背景色 */
+    color: #111; /* 白に近い文字色 */
+  }
+  
+  .field[type="text"]:focus,
+  .field:focus {
+    border-color: #007acc; /* アクティブなフィールドの境界色 */
+    background-color: #ffffff; /* アクティブなフィールドの背景色 */
+    outline: none;
+    
+  }
+
+  .field[type="text"]:valid,
+  .field:valid {
+    background-color: #fff;
+  }

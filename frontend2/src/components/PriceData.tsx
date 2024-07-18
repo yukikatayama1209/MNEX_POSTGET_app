@@ -6,7 +6,7 @@ const PriceData: React.FC = () => {
     <div>
       <h1>Price Data</h1>
       {/* ここにPrice Dataのコンテンツを追加 */}
-      <NewPostButton />
+      {/* <NewPostButton /> */}
     </div>
   );
 };

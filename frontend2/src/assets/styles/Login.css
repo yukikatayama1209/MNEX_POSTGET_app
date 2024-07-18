@@ -1,9 +1,9 @@
 body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    background-color: #1e1e1e; /* ダークグレーの背景色 */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    /* background-color: #1e1e1e; ダークグレーの背景色 */
+    /* display: flex;
+    justify-content: center; */
+    /* align-items: center; */
     height: 100vh;
     margin: 0;
   }

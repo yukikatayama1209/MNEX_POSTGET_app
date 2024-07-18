@@ -1,0 +1,8 @@
+.prod{
+    flex-direction: column;
+    width: 20%;
+}
+
+.profile{
+    flex-direction: row;
+}

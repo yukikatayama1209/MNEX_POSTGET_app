@@ -1,16 +1,16 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../assets/styles/NewPostButton.css';
+import style from '../assets/styles/NewPostButton.module.css';
 
 const NewPostButton: React.FC = () => {
   const navigate = useNavigate();
 
   return (
     <button 
-      className="new-post-button" 
+      className= {style.newpostbutton}
       onClick={() => navigate('/post-step-one')}
     >
-      +
+      <p className ={style.plus}>+</p>
     </button>
   );
 };

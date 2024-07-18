@@ -3,8 +3,9 @@ import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from './AuthContext';
-import '../assets/styles/Login.css';
+import style from '../assets/styles/Login.module.css';
 import logo from '../assets/images/logo.png';
+import TextField from '@mui/material/TextField';
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState('');
@@ -33,32 +34,44 @@ const Login: React.FC = () => {
     }
   };
   return (
-    <div className="login-container">
-      <form onSubmit={handleSubmit} className="login-form">
-        <img src={logo} alt="Logo" className="logo" />
+    <body className ={style.body}>
+    <div className={style.logincontainer}>
+      <form onSubmit={handleSubmit} className={style.loginform}>
+        <img src={logo} alt="Logo" className={style.logo} />
         <h2>Sign In</h2>
-        <div className="form-group">
-          <label>ユーザー名</label>
-          <input
+        <div className={style.formgroup}>
+          {/* <label>ユーザー名</label> */}
+          <TextField type = "text" id="outlined-basic" label="ユーザー名" variant="outlined"
+            value={username}
+            className= {style.field}
+            onChange={(e) => setUsername(e.target.value)}
+            />
+          {/* <input
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-          />
+          /> */}
         </div>
-        <div className="form-group">
-          <label>パスワード</label>
-          <input
+        <div className={style.formgroup}>
+          {/* <label>パスワード</label> */}
+          <TextField type = "password" id="outlined-basic" label="パスワード" variant="outlined"
+            value={password}
+            className= {style.field}
+            onChange={(e) => setPassword(e.target.value)}
+            />
+          {/* <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-          />
+          /> */}
         </div>
-        <button type="submit" className="login-button">Sign in</button>
+        <button type="submit" className={style.loginbutton}>Sign in</button>
         <p>
           アカウントを作成していませんか？ <a href="/register">Resister</a>
         </p>
       </form>
     </div>
+    </body>
   );
 };
 

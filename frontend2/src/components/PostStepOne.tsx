@@ -1,6 +1,7 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import style from '../assets/styles/PostStepOne.module.css'
 
 const PostStepOne: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -48,11 +49,15 @@ const PostStepOne: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <input type="text" name="product" placeholder="Product" value={formData.product} onChange={handleChange} />
-      <input type="date" name="purchase_date" value={formData.purchase_date} onChange={handleChange} />
-      <input type="text" name="shop_location" placeholder="Shop Location" value={formData.shop_location} onChange={handleChange} />
-      <input type="file" name="product_photo" onChange={handleFileChange} />
-      <textarea name="comments" placeholder="Comments" value={formData.comments} onChange={handleChange} />
+      <div className= {style.profile}>
+        <div className={style.prod}>
+          <input type="text" name="product" placeholder="Product" value={formData.product} onChange={handleChange} />
+          <input type="date" name="purchase_date" value={formData.purchase_date} onChange={handleChange} />
+          <input type="text" name="shop_location" placeholder="Shop Location" value={formData.shop_location} onChange={handleChange} />
+        </div>
+        <input type="file" name="product_photo" onChange={handleFileChange} />
+      </div>
+        <textarea name="comments" placeholder="Comments" value={formData.comments} onChange={handleChange} />
       <button type="submit">Next</button>
     </form>
   );

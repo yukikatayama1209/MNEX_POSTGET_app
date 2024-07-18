@@ -1,9 +1,9 @@
-body {
+.body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     background-color: #1e1e1e; /* ダークグレーの背景色 */
-    display: flex;
+    /* display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
     height: 100vh;
     margin: 0;
   }
@@ -61,7 +61,7 @@ body {
   }
   
   .register-button {
-    width: 100%;
+    width: 60%;
     padding: 10px 0;
     border: none;
     border-radius: 5px;

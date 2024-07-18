@@ -1,9 +1,9 @@
-import React, { useState, useEffect , useContext} from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import NewPostButton from './NewPostButton';
-import style from '../assets/styles/Home.module.css';
 import { AuthContext } from './AuthContext';
+import '../assets/styles/Home.css';
 
 
 
@@ -15,7 +15,6 @@ interface User {
 const Home: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const navigate = useNavigate();
-
   const { logout } = useContext(AuthContext);
 
   useEffect(() => {
@@ -37,42 +36,27 @@ const Home: React.FC = () => {
       };
       fetchUser();
     }
-  }, [navigate]);
-
+  }, [navigate])
   const handleLogout = () => {
     logout();
     navigate('/login');
   };
 
   return (
-    <div className={style.size}>
-      <nav className={style.navi}>
-        {user ? (
-        <label>
-          <div className={style.userdata}>
-            <p>Username: {user.username}</p>
-            <p>Points: {user.point}</p>
-          </div>
-        </label>  
+    <div className="home-container">
+      <h1>Home</h1>
+      {user ? (
+        <div className="user-info">
+          <p>Username: {user.username}</p>
+          <p>Points: {user.point}</p>
+          <button onClick={handleLogout}>Logout</button>
+        </div>
       ) : (
         <p>Loading user data...</p>
       )}
-        <button className = {style.button} onClick={handleLogout}>Logout</button>
-      </nav>
-      <h1 className={style.h1}>Home</h1>
-      <div>
-        {/* <button onClick={() => navigate('/price_data')}>Price Data</button> */}
-        {/* <button onClick={() => navigate('/hobby_board')}>Hobby Board</button> */}
-        <div className={style.frame}>
-        <iframe className={style.iframe}
-          src="/price_data"
-          title="Price Data"
-        ></iframe>
-        <iframe className={style.iframe}
-          src="/hobby_board"
-          title="Hobby Board"
-        ></iframe >
-        </div>
+      <div className="button-group">
+        <button onClick={() => navigate('/price_data')}>Price Data</button>
+        <button onClick={() => navigate('/hobby_board')}>Hobby Board</button>
       </div>
       <NewPostButton />
     </div>
