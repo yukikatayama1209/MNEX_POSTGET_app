@@ -61,13 +61,13 @@ const Home: React.FC = () => {
       </nav>
       <h1 className={style.h1}>Home</h1>
       <div>
-        {/* <button onClick={() => navigate('/price_data')}>Price Data</button> */}
+        <button onClick={() => navigate('/price_data')}>Price Data</button>
         {/* <button onClick={() => navigate('/hobby_board')}>Hobby Board</button> */}
         <div className={style.frame}>
-        <iframe className={style.iframe}
+        {/* <iframe className={style.iframe}
           src="/price_data"
           title="Price Data"
-        ></iframe>
+        ></iframe> */}
         <iframe className={style.iframe}
           src="/hobby_board"
           title="Hobby Board"

@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import Home from './components/Home';
-
+import PriceDataSelection from './components/PriceDataSelection';
 import Login from './components/Login';
 import Register from './components/Register';
 import PriceData from './components/PriceData';
@@ -55,7 +55,8 @@ const AppRoutes: React.FC = () => {
       <Route path="/not-found" element={<NotFound />} />
       
       <Route path="/home" element={<PrivateRoute component={Home} />} />
-      <Route path="/price_data" element={<PrivateRoute component={PriceData} />} />
+      <Route path="/price_data" element={<PrivateRoute component={PriceDataSelection} />} />
+      <Route path="/price_data/:product" element={<PrivateRoute component={PriceData} />} />
       <Route path="/hobby_board" element={<PrivateRoute component={HobbyBoard} />} />
       <Route path="/post-step-one" element={<PrivateRoute component={PostStepOne} />} />
       <Route path="/post-step-two" element={<PrivateRoute component={PostStepTwo} />} />

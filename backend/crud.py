@@ -35,6 +35,10 @@ def get_prices(db: Session, skip: int = 0, limit: int = 10):
 def get_price(db: Session, price_id: int):
     return db.query(models.Price).filter(models.Price.id == price_id).first()
 
+def get_prices_by_product(db: Session, product: str):
+    return db.query(models.Price).filter(models.Price.product == product).all()
+
+
 
 def get_hobby(db: Session, hobby_id: int):
     return db.query(models.Hobby).filter(models.Hobby.id == hobby_id).first()

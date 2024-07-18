@@ -19,6 +19,16 @@ class Price(PriceBase):
     class Config:
         from_attributes = True
 
+
+class PriceResponse(BaseModel):
+    product_photo: str
+    purchase_date: date
+    shop_location: str
+    comments: Optional[str]
+
+    class Config:
+        orm_mode = True
+
 class HobbyBase(BaseModel):
     product: str
     purchase_date: str

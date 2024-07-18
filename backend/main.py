@@ -233,6 +233,12 @@ async def update_user_point(
     print("User not found for updating points")
     raise HTTPException(status_code=404, detail="User not found")
 
+@app.get("/price_data/{product}", response_model=List[schemas.PriceResponse])
+def read_price_data(product: str, db: Session = Depends(get_db)):
+    prices = crud.get_prices_by_product(db, product=product)
+    if not prices:
+        raise HTTPException(status_code=404, detail=f"No price data found for {product}")
+    return prices
 
 
 
