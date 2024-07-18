@@ -22,28 +22,16 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const verifyToken = async () => {
-      const token = Cookies.get('token');
-      if (token) {
-        try {
-          await axios.get('http://localhost:8000/users/me', {
-            headers: { Authorization: `Bearer ${token}` }
-          });
-          setIsAuthenticated(true);
-          axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        } catch (error) {
-          console.error('Token verification failed:', error);
-          Cookies.remove('token');
-        }
-      }
-      setIsLoading(false);
-    };
-
-    verifyToken();
+    const token = Cookies.get('token');
+    if (token) {
+      setIsAuthenticated(true);
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    }
+    setIsLoading(false);
   }, []);
 
   const login = (token: string) => {
-    Cookies.set('token', token, { expires: 30 / 1440 }); // 30分の有効期限
+    Cookies.set('token', token);
     setIsAuthenticated(true);
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
   };

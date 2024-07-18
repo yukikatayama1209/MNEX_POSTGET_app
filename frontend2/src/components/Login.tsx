@@ -24,7 +24,9 @@ const Login: React.FC = () => {
         }
       });
       console.log('Login response:', response.data);
-      login(response.data.access_token);
+      const token = response.data.access_token;
+      login(token);
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       navigate('/home');
     } catch (error) {
       console.error('Error logging in:', error);

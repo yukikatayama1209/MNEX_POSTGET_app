@@ -25,7 +25,7 @@ from backend.schemas import PointUpdate
 # セキュリティ設定
 SECRET_KEY = "your_secret_key"
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
+ACCESS_TOKEN_EXPIRE_MINUTES = 60
 
 # データベースの初期化
 models.Base.metadata.create_all(bind=engine)

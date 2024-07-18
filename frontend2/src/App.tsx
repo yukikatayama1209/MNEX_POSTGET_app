@@ -1,7 +1,10 @@
 // App.tsx
-import React, { useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import axios from 'axios';
+import Cookies from 'js-cookie';
 import Home from './components/Home';
+
 import Login from './components/Login';
 import Register from './components/Register';
 import PriceData from './components/PriceData';
@@ -13,6 +16,21 @@ import PrivateRoute from './components/PrivateRoute';
 import { AuthProvider, AuthContext } from './components/AuthContext';
 
 const App: React.FC = () => {
+  useEffect(() => {
+    axios.interceptors.request.use(
+      (config) => {
+        const token = Cookies.get('token');
+        if (token) {
+          config.headers['Authorization'] = `Bearer ${token}`;
+        }
+        return config;
+      },
+      (error) => {
+        return Promise.reject(error);
+      }
+    );
+  }, []);
+
   return (
     <AuthProvider>
       <Router>
