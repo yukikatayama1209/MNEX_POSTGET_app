@@ -1,0 +1,87 @@
+.formContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .fileInputContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .fileInputLabel {
+    margin-bottom: 10px;
+    font-size: 1.2em;
+  }
+  
+  .fileInput {
+    margin-bottom: 15px;
+  }
+  
+  .photoPreview {
+    width: 300px;
+    height: 300px;
+    border: 1px solid #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .photoPreview img {
+    max-width: 100%;
+    max-height: 100%;
+  }
+  
+  .textAreaContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 20px;
+  }
+  
+  .textAreaLabel {
+    margin-bottom: 5px;
+  }
+  
+  .textArea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: vertical;
+  }
+  
+  .buttonContainer {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  .button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .button:hover {
+    background-color: #45a049;
+  }
+  
+  .skipButton {
+    background-color: #f44336;
+  }
+  
+  .skipButton:hover {
+    background-color: #e53935;
+  }
+  

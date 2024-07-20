@@ -1,8 +1,55 @@
-.prod{
+.formContainer {
+    display: flex;
     flex-direction: column;
-    width: 20%;
-}
-
-.profile{
-    flex-direction: row;
-}
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .inputGroup {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 15px;
+  }
+  
+  .label {
+    margin-bottom: 5px;
+  }
+  
+  .input,
+  .textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+  
+  .checkboxGroup {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .checkbox {
+    margin-right: 10px;
+  }
+  
+  .fileInput {
+    margin-bottom: 15px;
+  }
+  
+  .submitButton {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .submitButton:hover {
+    background-color: #45a049;
+  }
+  

@@ -1,0 +1,22 @@
+.hobbyBoard {
+    width: 100%;
+    padding: 20px;
+  }
+  
+  .hobbyContainer {
+    display: flex;
+    overflow-x: auto;
+    padding: 10px 0;
+  }
+  
+  .hobby {
+    flex: 0 0 auto;
+    width: 25%;
+    margin-right: 20px;
+  }
+  
+  .hobbyPhoto {
+    width: 100%;
+    border-radius: 10px;
+  }
+  

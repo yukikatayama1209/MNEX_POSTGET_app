@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+
+body {
+  background: linear-gradient(to right, #f7f7f7, #e2e2e2);
+  overflow-x: hidden;
+}
+
+.container {
+  text-align: center;
+  padding: 20px;
+  animation: fadeIn 1s ease;
+}
+
+.title {
+  font-size: 36px;
+  margin-bottom: 30px;
+  font-family: 'Great Vibes', cursive;
+  color: #2c3e50;
+}
+
+.section {
+  margin-bottom: 30px;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  animation: fadeInUp 1s ease;
+}
+
+.vegetables {
+  background: linear-gradient(to right, #d0f0c0, #a8e6cf);
+}
+
+.meats {
+  background: linear-gradient(to right, #fdd5d5, #fab1a0);
+}
+
+.fuel {
+  background: linear-gradient(to right, #d5e5ff, #a29bfe);
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.buttonContainer button {
+  margin: 5px;
+  padding: 12px 24px;
+  font-size: 18px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+  background: linear-gradient(to right, #fff, #ddd);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.buttonContainer button:hover {
+  background: linear-gradient(to right, #ddd, #fff);
+  transform: scale(1.05);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import style from '../assets/styles/HobbyBoard.module.css';
 
 interface Hobby {
   id: number;
@@ -57,13 +58,13 @@ const HobbyBoard: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className={style.hobbyBoard}>
       <h2>Latest Hobbies</h2>
-      <div>
+      <div className={style.hobbyContainer}>
         {latestHobbies.length > 0 ? (
           latestHobbies.map(hobby => (
-            <div key={hobby.id} style={{ marginBottom: '20px' }}>
-              <img src={`http://localhost:8000/photos/${hobby.hobby_photo}`} alt="Hobby" style={{ width: '25%' }} />
+            <div key={hobby.id} className={style.hobby}>
+              <img src={`http://localhost:8000/photos/${hobby.hobby_photo}`} alt="Hobby" className={style.hobbyPhoto} />
               <p>{hobby.comments}</p>
               <button onClick={() => handleLike(hobby.id, true)}>❤️ {hobby.good}</button>
             </div>
@@ -74,11 +75,11 @@ const HobbyBoard: React.FC = () => {
       </div>
 
       <h2>Top Hobbies</h2>
-      <div>
+      <div className={style.hobbyContainer}>
         {topHobbies.length > 0 ? (
           topHobbies.map(hobby => (
-            <div key={hobby.id} style={{ marginBottom: '20px' }}>
-              <img src={`http://localhost:8000/photos/${hobby.hobby_photo}`} alt="Hobby" style={{ width: '25%' }} />
+            <div key={hobby.id} className={style.hobby}>
+              <img src={`http://localhost:8000/photos/${hobby.hobby_photo}`} alt="Hobby" className={style.hobbyPhoto} />
               <p>{hobby.comments}</p>
               <button onClick={() => handleLike(hobby.id, false)}>❤️ {hobby.good}</button>
             </div>

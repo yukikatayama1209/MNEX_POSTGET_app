@@ -8,6 +8,8 @@ class PriceBase(BaseModel):
     shop_location: str
     comments: str
     product_photo: Optional[str] = None
+    price: int
+    importance: bool = False
 
 class PriceCreate(PriceBase):
     username: str
@@ -25,6 +27,10 @@ class PriceResponse(BaseModel):
     purchase_date: date
     shop_location: str
     comments: Optional[str]
+    price: int
+    importance: bool
+    class Config:
+        orm_mode = True
 
     class Config:
         orm_mode = True

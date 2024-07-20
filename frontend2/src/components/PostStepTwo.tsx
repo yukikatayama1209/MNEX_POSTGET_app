@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
+import styles from '../assets/styles/PostStepTwo.module.css';
 
 const PostStepTwo: React.FC = () => {
   const [formData, setFormData] = useState({
     comments: ''
   });
   const [hobbyPhoto, setHobbyPhoto] = useState<File | null>(null);
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
   const navigate = useNavigate();
   const location = useLocation();
   const { price_id } = location.state;
@@ -16,7 +18,17 @@ const PostStepTwo: React.FC = () => {
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setHobbyPhoto(e.target.files ? e.target.files[0] : null);
+    const file = e.target.files ? e.target.files[0] : null;
+    setHobbyPhoto(file);
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPhotoPreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setPhotoPreview(null);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -46,11 +58,29 @@ const PostStepTwo: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input type="file" name="hobby_photo" onChange={handleFileChange} />
-      <textarea name="comments" placeholder="Comments" value={formData.comments} onChange={handleChange} />
-      <button type="submit">Submit</button>
-      <button type="button" onClick={handleSkip}>Skip</button>
+    <form onSubmit={handleSubmit} className={styles.formContainer}>
+      <div className={styles.fileInputContainer}>
+        <label htmlFor="hobby_photo" className={styles.fileInputLabel}>ファイルを選択</label>
+        <input type="file" name="hobby_photo" onChange={handleFileChange} className={styles.fileInput} />
+        <div className={styles.photoPreview}>
+          {photoPreview ? <img src={photoPreview} alt="Hobby Preview" /> : '写真'}
+        </div>
+      </div>
+      <div className={styles.textAreaContainer}>
+        <label htmlFor="comments" className={styles.textAreaLabel}>Comments</label>
+        <textarea
+          id="comments"
+          name="comments"
+          className={styles.textArea}
+          placeholder="Comments"
+          value={formData.comments}
+          onChange={handleChange}
+        />
+      </div>
+      <div className={styles.buttonContainer}>
+        <button type="button" onClick={handleSkip} className={`${styles.button} ${styles.skipButton}`}>Skip</button>
+        <button type="submit" className={styles.button}>Submit</button>
+      </div>
     </form>
   );
 };

@@ -5,7 +5,7 @@ import uuid
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../backend')))
 import shutil
 from fastapi import FastAPI, Depends, HTTPException, status, UploadFile, File, Form, Request
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, JSONResponse
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -16,10 +16,11 @@ from passlib.context import CryptContext
 from jose import JWTError, jwt
 from datetime import datetime, timedelta, timezone
 from typing import Optional, List, Dict, Any
+import plotly.graph_objects as go
 
 from .database import SessionLocal, engine
 from . import models, schemas, crud
-from .models import User
+from .models import User, DataTable
 from backend.schemas import PointUpdate
 
 # セキュリティ設定
@@ -139,6 +140,8 @@ async def create_price(
     product: str = Form(...),
     purchase_date: str = Form(...),
     shop_location: str = Form(...),
+    price: int = Form(...),
+    importance: bool = Form(...),
     comments: str = Form(...),
     product_photo: UploadFile = File(None),
     db: Session = Depends(get_db),
@@ -146,6 +149,11 @@ async def create_price(
 ):
     print(f"Authenticated user: {current_user.username}")
 
+    allowed_users = ["yuka", "moderator"]
+    
+    if current_user.username not in allowed_users and importance:
+        importance = False
+    
     product_photo_path = None
     if product_photo:
         product_photo_path = f"backend/photo_data/product/{product_photo.filename}"
@@ -159,6 +167,8 @@ async def create_price(
         "product": product,
         "purchase_date": purchase_date,
         "shop_location": shop_location,
+        "price": price,
+        "importance": importance,
         "comments": comments,
         "product_photo": product_photo_path
     }
@@ -238,6 +248,7 @@ def read_price_data(product: str, db: Session = Depends(get_db)):
     prices = crud.get_prices_by_product(db, product=product)
     if not prices:
         raise HTTPException(status_code=404, detail=f"No price data found for {product}")
+    print(f"Returning price data: {prices}")  # デバッグ用のプリント文を追加
     return prices
 
 
@@ -308,3 +319,55 @@ async def like_hobby(
 @app.get("/users/me", response_model=schemas.User)
 async def read_users_me(current_user: models.User = Depends(get_current_user)):
     return current_user
+
+
+def get_plot_data(db: Session, product: str):
+    data = db.query(DataTable).all()
+    
+    # デバッグ：取得したデータを確認する
+    print(data)
+    
+    # プロダクトに基づいてフィールドを選択
+    field_mapping = {
+        'regular_gasoline': 'Regular_Hokkaido',
+        'premium_gasoline': 'High_octane_Hokkaido',
+        'kerosene': 'Kerosene_Hokkaido'
+    }
+    
+    if product not in field_mapping:
+        raise ValueError("Invalid product")
+
+    field = field_mapping[product]
+    
+    # グラフの作成
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=[row.SurveyDate for row in data],
+                             y=[getattr(row, field) for row in data],
+                             mode='lines',
+                             name=field))
+    fig.update_layout(title=f'{field} Prices Over Time')
+    
+    return fig
+
+
+# データを取得してJSONレスポンスを返すエンドポイント
+@app.get("/data", response_class=JSONResponse)
+async def read_data(db: Session = Depends(get_db)):
+    data = db.query(DataTable).all()
+    data_dict = [
+        {
+            "SurveyDate": row.SurveyDate,
+            "Regular_Hokkaido": float(row.Regular_Hokkaido),
+            "High_octane_Hokkaido": row.High_octane_Hokkaido,
+            "light_oil_Hokkaido": row.light_oil_Hokkaido,
+            "Kerosene_Hokkaido": row.Kerosene_Hokkaido
+        } for row in data
+    ]
+    return data_dict
+
+# グラフを表示するエンドポイント
+@app.get("/plot", response_class=JSONResponse)
+async def plot_data(db: Session = Depends(get_db)):
+    fig = get_plot_data(db)
+    plot_html = fig.to_html(full_html=False, default_height=500, default_width=700)
+    return {"plot_html": plot_html}

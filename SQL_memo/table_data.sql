@@ -15,8 +15,10 @@ CREATE TABLE prices (
     product VARCHAR(255) NOT NULL,
     purchase_date DATE NOT NULL,
     shop_location TEXT NOT NULL,
+    price INT NOT NULL,
+    importance BOOLEAN NOT NULL DEFAULT FALSE,
     product_photo TEXT NOT NULL,
-    comments TEXT NOT NULL
+    comments TEXT
 );
 
 CREATE TABLE hobbys (
