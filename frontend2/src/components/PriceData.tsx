@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useParams, useNavigate } from 'react-router-dom';
+import api from '../api/api';  // axiosインスタンスをインポート
 import style from '../assets/styles/PriceData.module.css';
 import PlotComponent from './PlotComponent';
 
@@ -55,7 +55,7 @@ const PriceData: React.FC = () => {
       }
 
       try {
-        const response = await axios.get<PriceData[]>(`http://localhost:8000/price_data/${productName}`, {
+        const response = await api.get<PriceData[]>(`/price_data/${productName}`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -104,7 +104,7 @@ const PriceData: React.FC = () => {
               <div className={style.scrollContainer}>
                 {importantRecentData.map((item) => (
                   <div key={item.id} className={`${style.priceItem} ${style.important}`}>
-                    <img src={`http://localhost:8000/photos/${item.product_photo}`} alt={productMapping[product]} className={style.productPhoto} />
+                    <img src={`${import.meta.env.VITE_API_BASE_URL}/photos/${encodeURIComponent(item.product_photo)}`} alt={productMapping[product]} className={style.productPhoto} />
                     <p>購入日: {item.purchase_date}</p>
                     <p>購入場所: {item.shop_location}</p>
                     <p>価格: {item.price !== undefined ? `${item.price}円` : '価格情報なし'}</p>
@@ -122,7 +122,7 @@ const PriceData: React.FC = () => {
               <div className={style.scrollContainer}>
                 {otherData.map((item) => (
                   <div key={item.id} className={style.priceItem}>
-                    <img src={`http://localhost:8000/photos/${item.product_photo}`} alt={productMapping[product]} className={style.productPhoto} />
+                    <img src={`${import.meta.env.VITE_API_BASE_URL}/photos/${encodeURIComponent(item.product_photo)}`} alt={productMapping[product]} className={style.productPhoto} />
                     <p>購入日: {item.purchase_date}</p>
                     <p>購入場所: {item.shop_location}</p>
                     <p>価格: {item.price !== undefined ? `${item.price}円` : '価格情報なし'}</p>

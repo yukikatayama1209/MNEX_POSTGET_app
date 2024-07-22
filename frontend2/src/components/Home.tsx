@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api/api';  // axiosインスタンスをインポート
 import NewPostButton from './NewPostButton';
 import style from '../assets/styles/Home.module.css';
 import { AuthContext } from './AuthContext';
@@ -16,25 +16,27 @@ const Home: React.FC = () => {
   const { logout } = useContext(AuthContext);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      navigate('/login');
-    } else {
-      const fetchUser = async () => {
-        try {
-          const response = await axios.get('http://localhost:8000/users/me', {
-            headers: {
-              'Authorization': `Bearer ${token}`
-            }
-          });
-          setUser(response.data);
-        } catch (error) {
-          console.error('Error fetching user data:', error);
-        }
-      };
-      fetchUser();
-    }
-  }, [navigate]);
+    const fetchUser = async () => {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        navigate('/login');
+        return;
+      }
+      try {
+        const response = await api.get('/users/me', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        setUser(response.data);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+        logout();
+        navigate('/login');
+      }
+    };
+    fetchUser();
+  }, [logout, navigate]);
 
   const handleLogout = () => {
     logout();

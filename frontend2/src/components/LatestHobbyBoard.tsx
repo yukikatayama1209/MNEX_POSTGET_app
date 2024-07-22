@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../api/api';  // axiosインスタンスをインポート
 import style from '../assets/styles/HobbyBoard.module.css';
 
 interface Hobby {
@@ -19,7 +19,7 @@ const LatestHobbyBoard: React.FC = () => {
   useEffect(() => {
     const fetchHobbies = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/hobbys/latest');
+        const response = await api.get('/hobbys/latest');
         console.log('Latest Hobbies:', response.data);
         setLatestHobbies(response.data);
       } catch (error) {
@@ -32,12 +32,12 @@ const LatestHobbyBoard: React.FC = () => {
 
   return (
     <div className={style.hobbyBoard}>
-      <h2>Latest Hobbys</h2>
+      <h2>Latest Hobbies</h2>
       <div className={style.hobbyContainer}>
         {latestHobbies.length > 0 ? (
           latestHobbies.map(hobby => (
             <div key={hobby.id} className={style.hobby}>
-              <img src={`http://localhost:8000/photos/${hobby.hobby_photo}`} alt="Hobby" className={style.hobbyPhoto} />
+              <img src={`${import.meta.env.VITE_API_BASE_URL}/photos/${encodeURIComponent(hobby.hobby_photo)}`} alt="Hobby" className={style.hobbyPhoto} />
               <p>{hobby.comments}</p>
               <button>❤️ {hobby.good}</button>
             </div>

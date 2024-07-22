@@ -30,7 +30,7 @@ const PriceDataDetail: React.FC = () => {
   return (
     <div className={style.priceDataDetail}>
       <h1 className={style.title}>{productMapping[product]}の詳細情報</h1>
-      <img src={`http://localhost:8000/photos/${data.product_photo}`} alt={productMapping[product]} className={style.productPhoto} />
+      <img src={`${import.meta.env.VITE_API_BASE_URL}/photos/${encodeURIComponent(data.product_photo)}`} alt={productMapping[product]} className={style.productPhoto} />
       <p>購入日: {data.purchase_date}</p>
       <p>購入場所: {data.shop_location}</p>
       <p>価格: {data.price !== undefined ? `${data.price}円` : '価格情報なし'}</p>
@@ -42,7 +42,7 @@ const PriceDataDetail: React.FC = () => {
         style={{ border: 0 }}
         loading="lazy"
         allowFullScreen
-        src={`https://www.google.com/maps/embed/v1/place?key=API_KEY&q=${encodeURIComponent(data.shop_location)}`}>
+        src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyDvW_b-5qGcgO1FbgYS2H09Rk8Ag0eOWB4&q=${encodeURIComponent(data.shop_location)}`}>
       </iframe>
     </div>
   );

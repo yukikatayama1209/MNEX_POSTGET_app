@@ -41,8 +41,11 @@ app.mount("/photo_data", StaticFiles(directory="backend/photo_data"), name="phot
 
 # CORSミドルウェアの設定
 origins = [
-    "http://localhost:5500",  # フロントエンドが動作しているURL
-    "http://localhost:8000",  # 必要に応じて追加
+    # "http://localhost:5500",  # フロントエンドが動作しているURL
+    # "http://localhost:8000",  # 必要に応じて追加
+    '*',
+    "http://172.20.10.4:5500",
+    "http://localhost:5500"
 ]
 
 app.add_middleware(

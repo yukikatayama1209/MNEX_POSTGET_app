@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../api/api';  // axiosインスタンスをインポート
 import style from '../assets/styles/HobbyBoard.module.css';
 
 interface Hobby {
@@ -20,11 +20,11 @@ const HobbyBoard: React.FC = () => {
   useEffect(() => {
     const fetchHobbies = async () => {
       try {
-        const latestResponse = await axios.get('http://localhost:8000/hobbys/latest');
+        const latestResponse = await api.get('/hobbys/latest');
         console.log('Latest Hobbies:', latestResponse.data);
         setLatestHobbies(latestResponse.data);
 
-        const topResponse = await axios.get('http://localhost:8000/hobbys/top');
+        const topResponse = await api.get('/hobbys/top');
         console.log('Top Hobbies:', topResponse.data);
         setTopHobbies(topResponse.data);
       } catch (error) {
@@ -38,7 +38,7 @@ const HobbyBoard: React.FC = () => {
   const handleLike = async (hobbyId: number, isLatest: boolean) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.post(`http://localhost:8000/hobbys/${hobbyId}/like`, null, {
+      await api.post(`/hobbys/${hobbyId}/like`, null, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -64,7 +64,7 @@ const HobbyBoard: React.FC = () => {
         {latestHobbies.length > 0 ? (
           latestHobbies.map(hobby => (
             <div key={hobby.id} className={style.hobby}>
-              <img src={`http://localhost:8000/photos/${hobby.hobby_photo}`} alt="Hobby" className={style.hobbyPhoto} />
+              <img src={`${import.meta.env.VITE_API_BASE_URL}/photos/${encodeURIComponent(hobby.hobby_photo)}`} alt="Hobby" className={style.hobbyPhoto} />
               <p>{hobby.comments}</p>
               <button onClick={() => handleLike(hobby.id, true)}>❤️ {hobby.good}</button>
             </div>
@@ -79,7 +79,7 @@ const HobbyBoard: React.FC = () => {
         {topHobbies.length > 0 ? (
           topHobbies.map(hobby => (
             <div key={hobby.id} className={style.hobby}>
-              <img src={`http://localhost:8000/photos/${hobby.hobby_photo}`} alt="Hobby" className={style.hobbyPhoto} />
+              <img src={`${import.meta.env.VITE_API_BASE_URL}/photos/${encodeURIComponent(hobby.hobby_photo)}`} alt="Hobby" className={style.hobbyPhoto} />
               <p>{hobby.comments}</p>
               <button onClick={() => handleLike(hobby.id, false)}>❤️ {hobby.good}</button>
             </div>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api/api';  // axiosインスタンスをインポート
 import styles from '../assets/styles/PostStepTwo.module.css';
 
 const PostStepTwo: React.FC = () => {
@@ -41,7 +41,7 @@ const PostStepTwo: React.FC = () => {
       data.append('hobby_photo', hobbyPhoto);
     }
     try {
-      await axios.post('http://localhost:8000/hobbys/', data, {
+      await api.post('/hobbys/', data, {
         headers: {
           'Content-Type': 'multipart/form-data',
           'Authorization': `Bearer ${token}`

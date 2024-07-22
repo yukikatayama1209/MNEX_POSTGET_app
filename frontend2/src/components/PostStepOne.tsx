@@ -1,6 +1,6 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api/api';  // axiosインスタンスをインポート
 import styles from '../assets/styles/PostStepOne.module.css';
 
 interface FormData {
@@ -51,7 +51,7 @@ const PostStepOne: React.FC = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:8000/prices/', data, {
+      const response = await api.post('/prices/', data, {
         headers: {
           'Content-Type': 'multipart/form-data',
           'Authorization': `Bearer ${token}`
