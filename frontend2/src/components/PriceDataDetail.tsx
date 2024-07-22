@@ -42,7 +42,7 @@ const PriceDataDetail: React.FC = () => {
         style={{ border: 0 }}
         loading="lazy"
         allowFullScreen
-        src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyDvW_b-5qGcgO1FbgYS2H09Rk8Ag0eOWB4&q=${encodeURIComponent(data.shop_location)}`}>
+        src={`https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=${encodeURIComponent(data.shop_location)}`}>
       </iframe>
     </div>
   );
