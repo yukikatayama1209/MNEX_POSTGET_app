@@ -315,7 +315,10 @@ async def like_hobby(
     db.commit()
     db.refresh(hobby)
     
-    await update_user_point(PointUpdate(username=current_user.username, point=10), db)
+    # hobbyの写真のusernameのuserのポイントを更新
+    hobby_user = crud.get_user_by_username(db, username=hobby.username)
+    if hobby_user:
+        await update_user_point(PointUpdate(username=hobby_user.username, point=10), db)
     
     return {"message": "Hobby liked successfully", "good": hobby.good}
 
