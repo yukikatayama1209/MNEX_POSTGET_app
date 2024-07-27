@@ -23,27 +23,34 @@ const PriceDataDetail: React.FC = () => {
   const location = useLocation();
   const data = location.state?.data;
 
+  const googleMapsApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+
   if (!data) {
     return <div>データがありません</div>;
   }
 
   return (
-    <div className={style.priceDataDetail}>
-      <h1 className={style.title}>{productMapping[product]}の詳細情報</h1>
-      <img src={`${import.meta.env.VITE_API_BASE_URL}/photos/${encodeURIComponent(data.product_photo)}`} alt={productMapping[product]} className={style.productPhoto} />
-      <p>購入日: {data.purchase_date}</p>
-      <p>購入場所: {data.shop_location}</p>
-      <p>価格: {data.price !== undefined ? `${data.price}円` : '価格情報なし'}</p>
-      {data.importance && <p style={{ color: 'red' }}>重要</p>}
-      <p>コメント: {data.comments || 'コメントなし'}</p>
-      <iframe
-        width="600"
-        height="450"
-        style={{ border: 0 }}
-        loading="lazy"
-        allowFullScreen
-        src={`https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=${encodeURIComponent(data.shop_location)}`}>
-      </iframe>
+    <div className={style.priceDataDetailContainer}>
+      <div className={style.priceDataDetail}>
+        <h1 className={style.title}>{productMapping[product]}の詳細情報</h1>
+        <img src={`${import.meta.env.VITE_API_BASE_URL}/photos/${encodeURIComponent(data.product_photo)}`} alt={productMapping[product]} className={style.productPhoto} />
+        <p className={style.largeText}>購入日: {data.purchase_date}</p>
+        <p className={style.largeText}>購入場所: {data.shop_location}</p>
+        <p className={style.price}>価格: {data.price !== undefined ? `${data.price}円` : '価格情報なし'}</p>
+        {data.importance && <p style={{ color: 'red' }}>重要</p>}
+        <p>コメント: {data.comments || 'コメントなし'}</p>
+        <div className={style.mapContainer}>
+          <h2 className={style.mapTitle}>お店へのアクセス</h2>
+          <iframe
+            width="600"
+            height="450"
+            style={{ border: 0 }}
+            loading="lazy"
+            allowFullScreen
+            src={`https://www.google.com/maps/embed/v1/place?key=${googleMapsApiKey}&q=${encodeURIComponent(data.shop_location)}`}>
+          </iframe>
+        </div>
+      </div>
     </div>
   );
 };

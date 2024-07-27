@@ -93,6 +93,12 @@ const PriceData: React.FC = () => {
 
   return (
     <div className={style.priceData}>
+      {isFuelProduct && (
+        <div className={style.plotContainer}>
+          <h1 className={style.plotTitle}>価格変動データ</h1>
+          <PlotComponent product={product} />
+        </div>
+      )}
       <h1 className={style.title}>{productMapping[product]}の価格データ</h1>
       {priceData.length === 0 ? (
         <p>{productMapping[product]}の価格データがありません。</p>
@@ -136,7 +142,6 @@ const PriceData: React.FC = () => {
           )}
         </div>
       )}
-      {isFuelProduct && <PlotComponent product={product} />}
     </div>
   );
 };
