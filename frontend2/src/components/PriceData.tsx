@@ -4,6 +4,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import api from '../api/api';  // axiosインスタンスをインポート
 import style from '../assets/styles/PriceData.module.css';
 import PlotComponent from './PlotComponent';
+import axios from 'axios';
+
 
 interface PriceData {
   id: number;
@@ -32,11 +34,12 @@ const productMapping: { [key: string]: string } = {
 };
 
 const PriceData: React.FC = () => {
-  const { product } = useParams<{ product: string }>();
-  const [priceData, setPriceData] = useState<PriceData[]>([]);
+  // const { product } = useParams<{ product: string }>();
+  const [priceData , setPriceData] = useState<PriceData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
+  const { product = '' } = useParams<{product: string}>();
 
   useEffect(() => {
     const fetchPriceData = async () => {

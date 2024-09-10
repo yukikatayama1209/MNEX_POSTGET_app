@@ -25,7 +25,9 @@ const PostStepOne: React.FC = () => {
   const navigate = useNavigate();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value, type, } = e.target;
+    const checked = (e.target as HTMLInputElement).checked;
+    
     setFormData(prevFormData => ({
       ...prevFormData,
       [name]: type === 'checkbox' ? checked : name === 'price' ? parseFloat(value) : value

@@ -19,7 +19,7 @@ const productMapping: { [key: string]: string } = {
 };
 
 const PriceDataDetail: React.FC = () => {
-  const { product } = useParams<{ product: string }>();
+  const { product = '' } = useParams<{ product: string }>();
   const location = useLocation();
   const data = location.state?.data;
 
